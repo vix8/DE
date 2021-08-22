@@ -1,16 +1,11 @@
 from bs4 import BeautifulSoup
+import requests
 
-with open ('D:\DE\Web Scraping\home.html', 'r') as html_file:
-    content = html_file.read()
-    
-    soup = BeautifulSoup(content, 'lxml')
-    course_cards = soup.find_all('div', class_ = 'card')
+html_text = requests.get('https://www.imdb.com/chart/toptv/').text
 
-    for course in course_cards:
-        course_name = course.h5.text
-        course_price = course.a.text.split()[-1]  
+soup = BeautifulSoup(html_text, 'lxml')
+movies = soup.find('td','titleColumn').text.replace('      ', '').replace('\n' , ' ').strip()
+rating = soup.find('td', class_ = 'ratingColumn imdbRating').text
 
-        #using f string
-        
-        print(f'{course_name} costs {course_price}')
-    
+print(movies)
+print(rating)
