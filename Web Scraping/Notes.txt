@@ -1,1 +1,57 @@
-Basic HTML Structure, HTML Tags Explanation
+Local HTML Scraping:
+
+Basic HTML Structure, HTML Tags Explanation 
+
+- tags are responsible to view info
+    - in <head> Tab content defined
+    - in <body> Page content defined
+        - <div> Card styling (is repeated and is scraped)
+        - <h5> Small header
+        - Leads us to another page
+
+Packages Installation
+
+- pip install beautifulsoup4
+- pip install lxml
+
+Scraping Usage, Local files
+
+- with open ('D:\DE\Web Scraping\home.html', 'r') as html_file:
+
+Beautiful Soup find & find_all() methods
+
+from bs4 import BeautifulSoup
+
+with open ('D:\DE\Web Scraping\home.html', 'r') as html_file:
+    content = html_file.read()
+    
+    soup = BeautifulSoup(content, 'lxml')
+    courses_html_tags = soup.find_all('h5')
+    
+    for course in courses_html_tags:
+        print(course.text) 
+
+    
+Grab all Prices, Basic Scraping Project
+
+from bs4 import BeautifulSoup
+
+with open ('D:\DE\Web Scraping\home.html', 'r') as html_file:
+    content = html_file.read()
+    
+    soup = BeautifulSoup(content, 'lxml')
+    course_cards = soup.find_all('div', class_ = 'card')
+
+    for course in course_cards:
+        course_name = course.h5.text
+        course_price = course.a.text.split()[-1]  
+
+        #using f string
+        
+        print(f'{course_name} costs {course_price}')
+
+
+Website Scraping:
+
+Using the Requests Library to see a Website's HTML
+
